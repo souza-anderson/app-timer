@@ -4,12 +4,13 @@ import { LinearGradient } from 'expo-linear-gradient';
 
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
+import Counter from './Counter';
 
 export default function App() {
 
   console.disableYellowBox = true;
   const [minutes, setMinutes] = useState(0);
-  const [seconds, setSeconds] = useState(0);
+  const [seconds, setSeconds] = useState(1);
   const [state, setState] = useState("select");
   const [sounds, setSounds] = useState([
     {
@@ -33,7 +34,7 @@ export default function App() {
   ]);
   
   const numbers = [];
-  for (let i = 1; i <= 60; i++) {
+  for (let i = 0; i < 60; i++) {
     numbers.push(i);
   }
 
@@ -66,7 +67,7 @@ export default function App() {
               top: 0,
               height: '100%',
             }}
-        />      
+        />
 
         <Text style={{color: 'white', fontSize: 30}}>Selecione seu tempo:</Text>
         
@@ -76,16 +77,16 @@ export default function App() {
             selectedValue={minutes}
             style={{height: 50, width: 100, color: 'white'}}
             onValueChange={(itemValue, itemIndex) =>
-              setMinutes(itemValue)
-            }>
-              <Picker.Item label='0' value='0' />
-              {
-                numbers.map(number => {
-                  return(
-                    <Picker.Item label={number.toString()} value={number.toString()} />
-                  )
-                })
-              }
+            setMinutes(itemValue)
+          }>
+            <Picker.Item label='0' value='0' />
+            {
+              numbers.map(number => {
+                return(
+                  <Picker.Item label={number.toString()} value={number.toString()} />
+                )
+              })
+            }
           </Picker>
 
           <Text style={styles.label}>Segundos: </Text>
@@ -93,16 +94,15 @@ export default function App() {
             selectedValue={seconds}
             style={{height: 50, width: 100, color: 'white'}}
             onValueChange={(itemValue, itemIndex) =>
-              setSeconds(itemValue)
-            }>
-              <Picker.Item label='0' value='0' />
-              {
-                numbers.map(number => {
-                  return (
-                    <Picker.Item label={number.toString()} value={number.toString()} />
-                  )
-                })
-              }
+            setSeconds(itemValue)
+          }>
+            {
+              numbers.map(number => {
+                return (
+                  <Picker.Item label={number.toString()} value={number.toString()} />
+                )
+              })
+            }
           </Picker>
         </View>
 
@@ -135,7 +135,14 @@ export default function App() {
     );
   } else if (state == 'start') {
     return (      
-        <Text>Começou a contagem!!!!</Text>    
+        <Counter 
+          setMinutes={setMinutes}
+          setSeconds={setSeconds} 
+          setState={setState} 
+          minutes={minutes} 
+          seconds={seconds}
+        >      
+        </Counter>  
     );
   }
 }
@@ -168,11 +175,11 @@ const styles = StyleSheet.create({
   },
 
   startButton: {
-    width: 100,
-    height: 100,
+    width: 150,
+    height: 150,
     backgroundColor: 'rgba(0, 0, 0, 0.3)',
     marginTop: 30,
-    borderRadius: 50,
+    borderRadius: 75,
     alignItems: "center",
     justifyContent: "center",
     borderColor: 'white',
