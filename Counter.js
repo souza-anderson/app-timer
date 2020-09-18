@@ -53,7 +53,7 @@ const Counter = props => {
     props.setSeconds(1);
   }
 
-  const playSound = async () => {
+  async function playSound() {
     const soundObject = new Audio.Sound();
     
     try {
@@ -63,7 +63,6 @@ const Counter = props => {
           selectedSound = sound.file;
         }
       })
-      console.log(selectedSound);
       await soundObject.loadAsync(selectedSound);
       await soundObject.playAsync();
       // Your sound is playing!
@@ -84,7 +83,7 @@ const Counter = props => {
       <StatusBar style="light" />
         <LinearGradient
             // Background Linear Gradient
-            colors={['rgba(0,0,0,1)', 'rgba(0,0,0,0.6)']}
+            colors={['rgba(2, 43, 84,1)', 'rgba(2, 43, 84,0.6)']}
             style={{
               position: 'absolute',
               left: 0,
@@ -94,7 +93,10 @@ const Counter = props => {
             }}
         />
 
-      <View style={{flexDirection: "row"}}>
+      <View style={{
+        flexDirection: "row"
+      }}
+      >
         <Text style={styles.time}>{minutes} : </Text>
         <Text style={styles.time}>{seconds}</Text>
       </View>

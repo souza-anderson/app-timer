@@ -1,12 +1,25 @@
 import { Picker } from '@react-native-community/picker';
 import { StatusBar } from 'expo-status-bar';
 import { LinearGradient } from 'expo-linear-gradient';
+import {
+  useFonts,
+  Roboto_400Regular,
+  Roboto_500Medium,
+  Roboto_700Bold  
+} from '@expo-google-fonts/roboto';
 
 import React, { useState } from 'react';
 import { StyleSheet, Text, TouchableOpacity, View } from 'react-native';
 import Counter from './Counter';
+import { AppLoading } from 'expo';
 
 export default function App() {
+
+  let [fontsLoaded] = useFonts({
+    Roboto_400Regular,
+    Roboto_500Medium,
+    Roboto_700Bold
+  });
 
   console.disableYellowBox = true;
   const [minutes, setMinutes] = useState(0);
@@ -52,24 +65,28 @@ export default function App() {
     setSounds(soundsTemp);
   }
 
-  
-  if (state == "select") {
+  if (!fontsLoaded) {
+    return <AppLoading />
+  } else if (state == "select") {
     return (
       <View style={styles.container}>
         <StatusBar style="light" />
         <LinearGradient
             // Background Linear Gradient
-            colors={['rgba(0,0,0,1)', 'rgba(0,0,0,0.6)']}
+            colors={['rgba(2, 43, 84,0.6)', 'rgba(2, 43, 84,1)']}
             style={{
               position: 'absolute',
               left: 0,
               right: 0,
               top: 0,
-              height: '100%',
+              height: '100%'              
             }}
         />
 
-        <Text style={{color: 'white', fontSize: 30}}>Selecione seu tempo:</Text>
+        <Text style={{
+          color: 'white',
+          fontSize: 30,
+          fontFamily: 'Roboto_500Medium'}}>Selecione seu tempo:</Text>
         
         <View style={{flexDirection: 'row', alignItems: 'center'}}>
         <Text style={styles.label}>Minutos: </Text>
@@ -112,13 +129,17 @@ export default function App() {
               if (sound.selected) {
                 return (
                   <TouchableOpacity onPress={() => alarmClick(sound.id)} style={styles.alarmButtonSelected}>
-                    <Text style={{color: 'white'}}>{sound.sound}</Text>
+                    <Text style={{
+                      color: 'white',
+                      fontFamily: 'Roboto_400Regular'}}>{sound.sound}</Text>
                   </TouchableOpacity>
                 )
               } else {
                 return (
                   <TouchableOpacity onPress={() => alarmClick(sound.id)} style={styles.alarmButton}>
-                    <Text style={{color: 'white'}}>{sound.sound}</Text>
+                    <Text style={{
+                      color: 'white',
+                      fontFamily: 'Roboto_400Regular'}}>{sound.sound}</Text>
                   </TouchableOpacity>
                 )
               }  
@@ -128,7 +149,10 @@ export default function App() {
 
         <View>
           <TouchableOpacity onPress={() => setState('start')} style={styles.startButton}>
-            <Text style={{color: 'white', fontSize: 22}}>Iniciar</Text>
+            <Text style={{
+              color: 'white',
+              fontSize: 22,
+              fontFamily: 'Roboto_500Medium'}}>Iniciar</Text>
           </TouchableOpacity>
         </View>
       </View>
@@ -152,19 +176,21 @@ const styles = StyleSheet.create({
   container: {
     flex: 1,
     alignItems: 'center',
-    justifyContent: 'center',
+    justifyContent: 'center'  
   },
 
   label: {
     color: 'white',
     textAlign: 'center',
-    fontSize: 15
+    fontSize: 15,
+    fontFamily: 'Roboto_400Regular'
   },
 
   alarmButton: {
     padding: 8,
     marginRight: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.3)'
+    backgroundColor: 'rgba(0, 0, 0, 0.3)',
+    borderRadius: 10,
   },
 
   alarmButtonSelected: {
@@ -172,7 +198,8 @@ const styles = StyleSheet.create({
     borderWidth: 1,
     borderColor: 'white',
     marginRight: 20,
-    backgroundColor: 'rgba(0, 0, 0, 0.5)'
+    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+    borderRadius: 10
   },
 
   startButton: {
