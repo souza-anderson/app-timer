@@ -24,6 +24,7 @@ const Counter = props => {
             props.setState("select");
             props.setMinutes(0);
             props.setSeconds(1);
+            playSound();
           }
         }
       }
@@ -50,6 +51,29 @@ const Counter = props => {
     props.setState("select");
     props.setMinutes(0);
     props.setSeconds(1);
+  }
+
+  const playSound = async () => {
+    const soundObject = new Audio.Sound();
+    
+    try {
+      let selectedSound;
+      props.sounds.map(sound => {
+        if (sound.selected) {
+          selectedSound = sound.file;
+        }
+      })
+      console.log(selectedSound);
+      await soundObject.loadAsync(selectedSound);
+      await soundObject.playAsync();
+      // Your sound is playing!
+
+      // Don't forget to unload the sound from memory
+      // when you are done using the Sound object
+      // await soundObject.unloadAsync();
+    } catch (error) {
+      // An error occurred!
+    }
   }
 
   const minutes = numberFormat(props.minutes);

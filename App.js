@@ -17,19 +17,19 @@ export default function App() {
       id: 1,
       selected: false,
       sound: 'Alarme 1',
-      file: 'alarme1.mp3'
+      file: require('./assets/alarme1.mp3')
     },
     {
       id: 2,
       selected: true,
       sound: 'Alarme 2',
-      file: 'alarme2.mp3'
+      file: require('./assets/alarme2.mp3')
     },
     {
       id: 3,
       selected: false,
       sound: 'Alarme 3',
-      file: 'alarme3.mp3'
+      file: require('./assets/alarme3.mp3')
     }
   ]);
   
@@ -135,10 +135,11 @@ export default function App() {
     );
   } else if (state == 'start') {
     return (      
-        <Counter 
+        <Counter
           setMinutes={setMinutes}
           setSeconds={setSeconds} 
           setState={setState} 
+          sounds={sounds}
           minutes={minutes} 
           seconds={seconds}
         >      
